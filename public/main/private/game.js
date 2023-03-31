@@ -1,11 +1,15 @@
-let pokemonList = ["Bulbasaur", "Ivysaur", "Venusaur", "Charmander", "Charmeleon", "Charizard", "Squirtle", "Wartortle", "Blastoise", "Caterpie", "Metapod", "Butterfree", "Weedle", "Kakuna", "Beedrill", "Pidgey", "Pidgeotto", "Pidgeot", "Rattata", "Raticate", "Spearow", "Fearow", "Ekans", "Arbok", "Pikachu", "Raichu", "Sandshrew", "Sandslash", "Nidoran", "Nidorina", "Nidoqueen", "Nidoran", "Nidorino", "Nidoking", "Clefairy", "Clefable", "Vulpix", "Ninetales", "Jigglypuff", "Wigglytuff", "Zubat", "Golbat", "Oddish", "Gloom", "Vileplume", "Paras", "Parasect", "Venonat", "Venomoth", "Diglett", "Dugtrio", "Meowth", "Persian", "Psyduck", "Golduck", "Mankey", "Primeape", "Growlithe", "Arcanine", "Poliwag", "Poliwhirl", "Poliwrath", "Abra", "Kadabra", "Alakazam", "Machop", "Machoke", "Machamp", "Bellsprout", "Weepinbell", "Victreebel", "Tentacool", "Tentacruel", "Geodude", "Graveler", "Golem", "Ponyta", "Rapidash", "Slowpoke", "Slowbro", "Magnemite", "Magneton", "Farfetch'd", "Doduo", "Dodrio", "Seel", "Dewgong", "Grimer", "Muk", "Shellder", "Cloyster", "Gastly", "Haunter", "Gengar", "Onix", "Drowzee", "Hypno", "Krabby", "Kingler", "Voltorb", "Electrode", "Exeggcute", "Exeggutor", "Cubone", "Marowak", "Hitmonlee", "Hitmonchan", "Lickitung", "Koffing", "Weezing", "Rhyhorn", "Rhydon", "Chansey", "Tangela", "Kangaskhan", "Horsea", "Seadra", "Goldeen", "Seaking", "Staryu", "Starmie", "Mr. Mime", "Scyther", "Jynx", "Electabuzz", "Magmar", "Pinsir", "Tauros", "Magikarp", "Gyarados", "Lapras", "Ditto", "Eevee", "Vaporeon", "Jolteon", "Flareon", "Porygon", "Omanyte", "Omastar", "Kabuto", "Kabutops", "Aerodactyl", "Snorlax", "Articuno", "Zapdos", "Moltres", "Dratini", "Dragonair", "Dragonite", "Mewtwo", "Mew"];
+var pokemonList = ["bulbasaur", "ivysaur", "venusaur", "charmander", "charmeleon", "charizard", "squirtle", "wartortle", "blastoise", "caterpie", "metapod", "butterfree", "weedle", "kakuna", "beedrill", "pidgey", "pidgeotto", "pidgeot", "rattata", "raticate", "spearow", "fearow", "ekans", "arbok", "pikachu", "raichu", "sandshrew", "sandslash", "nidoran♀", "nidorina", "nidoqueen", "nidoran♂", "nidorino", "nidoking", "clefairy", "clefable", "vulpix", "ninetales", "jigglypuff", "wigglytuff", "zubat", "golbat", "oddish", "gloom", "vileplume", "paras", "parasect", "venonat", "venomoth", "diglett", "dugtrio", "meowth", "persian", "psyduck", "golduck", "mankey", "primeape", "growlithe", "arcanine", "poliwag", "poliwhirl", "poliwrath", "abra", "kadabra", "alakazam", "machop", "machoke", "machamp", "bellsprout", "weepinbell", "victreebel", "tentacool", "tentacruel", "geodude", "graveler", "golem", "ponyta", "rapidash", "slowpoke", "slowbro", "magnemite", "magneton", "farfetch’d", "doduo", "dodrio", "seel", "dewgong", "grimer", "muk", "shellder", "cloyster", "gastly", "haunter", "gengar", "onix", "drowzee", "hypno", "krabby", "kingler", "voltorb", "electrode", "exeggcute", "exeggutor", "cubone", "marowak", "hitmonlee", "hitmonchan", "lickitung", "koffing", "weezing", "rhyhorn", "rhydon", "chansey", "tangela", "kangaskhan", "horsea", "seadra", "goldeen", "seaking", "staryu", "starmie", "mr.mime", "scyther", "jynx", "electabuzz", "magmar", "pinsir", "tauros", "magikarp", "gyarados", "lapras", "ditto", "eevee", "vaporeon", "jolteon", "flareon", "porygon", "omanyte", "omastar", "kabuto", "kabutops", "aerodactyl", "snorlax", "articuno", "zapdos", "moltres", "dratini", "dragonair", "dragonite", "mewtwo", "mew"];
+
+var caughtPokemons = [];
 
 let player = {
     xp: 0,
     level: 1,
     money: 0,
-    attacks: 5
+    attacks: 5,
 }
+
+let pokeCounter = 0;
 
 // Pokemon health points bar
 const hpBar = document.getElementById("hpBar");
@@ -13,20 +17,23 @@ const yellowZone = hpBar.ariaValueMax / 1.5;
 const redZone = hpBar.ariaValueMax / 3;
 let hpBarText = document.getElementById("hpBarText");
 
-
 // Experience bar
 const xpBar = document.getElementById("xpBar");
 let xpBarText = document.getElementById("xpBarText");
 const xpGain = 10;
 
-// Player level 
+
+// Player level Nav
 let levelNav = document.getElementById("level");
 
-// Player money
+// Player money  Nav
 let moneyNav = document.getElementById("money");
 
-// Player damage
+// Player damage  Nav
 let damageNav = document.getElementById("damage");
+
+// Pokemon counter Nav
+let pokeCount = document.getElementById("pokeCount");
 
 // Pokemon image
 const pokemon = document.getElementById("pokemon");
@@ -34,11 +41,31 @@ const pokemon = document.getElementById("pokemon");
 // Pokemon name
 const pokeName = document.getElementById("pokemonName");
 
+// Pokeball image to know the pokemon is already captured in your pokedex
+let caught = document.getElementById("caught");
+caught.style.width = "30px";
+caught.style.height = "30px";
+
+
+var pokemonIsCapturedPokeball = function () {
+    if (alreadyCaught(pokeName.innerHTML)) {
+        caught.src = "assets/images/pokeballs/Pokeball.svg";
+        caught.style.filter = "invert(0%)";
+    }
+    else {
+        caught.src = "assets/images/pokeballs/None.svg";
+        caught.style.filter = "invert(100%)";
+    }
+}
+
+
 // Waits for all the html to load before doing this code
 document.addEventListener("DOMContentLoaded", function (e) {
     if (localStorage.getItem("player") != null) {
         load();
     }
+
+    pokemonIsCapturedPokeball();
 
     // Attack every second
     setInterval(function () {
@@ -51,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     levelNav.innerHTML = "level: " + player.level;
     moneyNav.innerHTML = "money: " + player.money;
     damageNav.innerHTML = "click damage: " + player.attacks;
+    pokeCount.innerHTML = "pokemon caught: " + pokeCounter;
     hpBarText.innerHTML = "hp: " + hpBar.ariaValueNow + " / " + hpBar.ariaValueMax;
     hpBarText.style.color = "white";
     xpBarText.innerHTML = "xp: " + xpBar.ariaValueNow + " / " + xpBar.ariaValueMax;
@@ -87,6 +115,16 @@ function attack() {
     setHealthPointsPadding();
 }
 
+var alreadyCaught = function (name) {
+    for (let i = 0; i < caughtPokemons.length; i++) {
+
+        if (caughtPokemons[i] === name) {
+            return true;
+        }
+    }
+    return false;
+}
+
 /* When the pokemon dies:
  *      Get the drops of the pokemon (money and xp)
  *      Restart next pokemon's shake animation
@@ -95,11 +133,18 @@ function attack() {
  *      Restore the bar's hp for the next pokemon
  */
 function pokemonDies() {
+    if (caughtPokemons === undefined || !alreadyCaught(pokeName.innerHTML)) {
+        caughtPokemons.push(pokeName.innerHTML);
+        pokeCounter++;
+        pokeCount.innerHTML = "pokemon caught: " + pokeCounter;
+    }
+
     getPokemonDrops();
     stopPokemonShake()
     hpBar.classList = "progress-bar progress-bar progress-bar-animated bg-sucess";
     spawnPokemon();
     restoreHP();
+    pokemonIsCapturedPokeball();
     save();
 }
 
@@ -125,9 +170,9 @@ function stopPokemonShake() {
 
 function spawnPokemon() {
     let pokeSize = pokemonList.length;
-    let pokemonNumber = Math.floor(Math.random() * (pokeSize - 1));
-    pokemon.src = "assets/images/pokemon/" + (pokemonNumber + 1) + ".png";
-    pokeName.innerHTML = (pokemonList[pokemonNumber].toLowerCase());
+    let pokemonNumber = Math.floor(Math.random() * pokeSize) + 1;
+    pokemon.src = "assets/images/pokemon/" + (pokemonNumber) + ".png";
+    pokeName.innerHTML = (pokemonList[pokemonNumber - 1]);
 }
 
 function setExperiencePadding() {
